@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.oasis-open.org/docbook/4.5" xmlns:xl="http://www.w3.org/1999/xlink"
+	xsi:schemaLocation="http://www.oasis-open.org/docbook/4.5 http://www.oasis-open.org/docbook/xsd/4.5/docbook.xsd">
+
+	<title>Getting started with DataCleaner desktop</title>
+
+	<section id="installing_datacleaner">
+		<title>Installing the desktop application</title>
+		<para>The desktop version of DataCleaner requires practically no
+			installation. The
+			application is not dependent on any particular
+			operating system and
+			does not need to "register" in any registration
+			database or something
+			like that.
+		</para>
+		<para>The only two requirements of DataCleaner are:</para>
+		<orderedlist>
+			<listitem>
+				A computer (with a graphical display, except if run in command-line
+				mode).
+			</listitem>
+			<listitem>
+				A
+				<link xl:href="http://www.java.com">Java Runtime Environment</link>
+				(JRE), version 6 or higher.
+			</listitem>
+		</orderedlist>
+
+		<para>You have two options in terms of installation.</para>
+		<orderedlist>
+			<listitem>
+				<para>
+					Download DataCleaner as a distributable package (.zip or .tar.gz)
+					from the release list on our
+					<link xl:href="http://datacleaner.org/downloads">downloads page</link>
+					.
+				</para>
+
+				<para>Unpackage the distributable in a directory of your own choice.
+					DataCleaner will save it's configuration within this same
+					directory.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Run DataCleaner as a Java WebStart application. You can do this by
+					clicking the WebStart link on our
+					<link xl:href="http://datacleaner.org/downloads">downloads page</link>
+					.
+				</para>
+				<para>In WebStart the application will be installed in your JRE's
+					application cache. Each time you start the application it will
+					automatically check for updates to the application. DataCleaner's
+					configuration will be stored in your "home"-directory in a folder
+					called .datacleaner/[version].
+				</para>
+			</listitem>
+		</orderedlist>
+	</section>
+
+	<section id="connecting_to_your_datastore">
+		<title>Connecting to your datastore</title>
+		<para>Below is a screenshot of the initial screen that
+			will be
+			presented when launching DataCleaner (desktop edition), containing a
+			list of datastores. Above the list you will see a set of icons, each
+			representing a type of datastore. Click either of the icons to
+			register your own datastore.
+		</para>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="analysis_job_01_datastore_list.jpg"
+					format="JPG" scalefit="1" />
+			</imageobject>
+		</mediaobject>
+		<para>Once you've registered ('created') your own datastore, you can
+			select it from the list and click 'Analyze!' to start working with
+			it!
+		</para>
+
+		<tip>
+			<para>
+				You can also configure your datastore by means of the
+				configuration file (conf.xml), which has both some pros and some cons.
+				For more information, read the
+				<link linkend="chapter_configuration_file">configuration file chapter</link>
+				.
+			</para>
+		</tip>
+	</section>
+	
+	<section id="adding_components">
+		<title>Adding components to the job</title>
+		<para>There are a few different kinds of components that you can add
+			to your
+			job:
+		</para>
+		<orderedlist>
+			<listitem>
+				<para>
+					<emphasis>Analyzers</emphasis>
+					, which are the most important components. Actually, without at
+					least one analyzer the job will not run. An analyzer is a component
+					that inspects the data that it receives and generates a result or a
+					report. The majority of the data profiling cruft is created as
+					analyzers.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Transformers</emphasis>
+					are components used to modify the data before analyzing it.
+					Sometimes it's nescesary to extract parts of a value or combine two
+					values to correctly get an idea about a particular measure. In
+					other scenarios, transformers can be used to perform reference data
+					lookups or other similar tasks and place the results of an
+					operation into the stream of data in the job.
+				</para>
+				<para>
+					The result of a transformer is a set of output columns. These
+					columns work excactly like regular columns in your job, except that
+					they have a preceeding step in the flow before they become
+					materialized.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Filters</emphasis>
+					are components that split the flow of processing in a job. A filter
+					will have a number of possible outcomes and depending on the
+					outcome of a filter, a particular row might be processed by
+					different sub-flows. Filters are often used simply to disregard
+					certain rows from the analysis, eg. null values or values outside
+					the range of interest.
+				</para>
+			</listitem>
+		</orderedlist>
+		<para>Each of these
+			components will get their own tab, from where you
+			can configure them.
+		</para>
+		<para>
+			Transformers and filters are added to your job using the "Transform"
+			button. Please refer to the reference chapter
+			<link linkend="transformations">Transformations</link>
+			for more
+			information on specific transformers and filters.
+		</para>
+		<para>
+			Analyzers are added to your job using the "Analyze" button. Please
+			refer to the reference chapter
+			<link linkend="analyzers">Analyzers</link>
+			for more
+			information on specific analyzers.
+		</para>
+	</section>
+
+	<section id="wiring_components">
+		<title>Wiring components together</title>
+		<para>Simply adding a transformer or filter actually doesn't change
+			your job as such! This is because these components only have an
+			impact if you wire them together somehow.
+		</para>
+		<para>To wire a transformer you simply need to use it's output column.
+			DataCleaner will automatically build the flow so that a transformer
+			is executed before components that depend on it's output columns.
+		</para>
+		<para>To wire a filter you need to set up a dependency on either of
+			it's outcomes. All components have a button for selecting filter
+			outcomes in their top-right corners. Click this button to select a
+			filter outcome to depend on. If you have multiple filters you can
+			chain these simply by having dependent outcomes of the individual
+			filters.
+		</para>
+		<para>To get an overview of your current job flow, you can click the
+			"Visualize" button, which will present the job's contents in an
+			interactive flow
+			diagram:
+		</para>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="visualize_job.png" format="PNG"
+					scalefit="1" />
+			</imageobject>
+		</mediaobject>
+	</section>
+
+	<section id="executing">
+		<title>Executing jobs</title>
+		<para>When a job has been built you can execute it. To check whether
+			your job is correctly configured and ready to execute, check the
+			status bar in the bottom of the job building window.
+		</para>
+		<para>To execute the job, simply click the "Run analysis" button in
+			the top-right corner of the window. This will bring up the result
+			window, which contains:
+		</para>
+		<orderedlist>
+			<listitem>
+				<para>
+					The
+					<emphasis>Progress information</emphasis>
+					tab which contains useful information and progress indications
+					while the job is executing.
+				</para>
+			</listitem>
+			<listitem>
+				<para>Additional tabs for each table that is being processed in the
+					job. Results for the individual analyzers will be shown in these
+					tabs.
+				</para>
+			</listitem>
+		</orderedlist>
+		<para>Here's an example of an analysis result window:</para>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="analysis_job_05_result.jpg" format="JPG"
+					scalefit="1" />
+			</imageobject>
+		</mediaobject>
+	</section>
+
+	<section id="saving_and_opening_jobs">
+		<title>Saving and opening jobs</title>
+		<para>You can save your jobs in order to reuse them at a later time.
+			Saving a job is simple: Simply click the "Save analysis job" button
+			in the top-left corner of the window.
+		</para>
+		<para>Analysis jobs are saved in files with the ".analysis.xml"
+			extension. These files are XML files that are readable and editable
+			using any XML editor.
+		</para>
+		<para>Opening jobs can be done using the "File -> Open analysis
+			job..." menu item. Opening a job will restore a job building window
+			from where you can edit and run the job.
+		</para>
+	</section>
+
+	<section id="template_jobs">
+		<title>Template jobs</title>
+		<para>DataCleaner contains a feature where you can reuse a job for
+			multiple datastores or just multiple columns in the same datastore.
+			We call this feature 'template jobs'.
+		</para>
+		<para>When opening a job you are presented with a file chooser. When
+			you select a job file a panel will appear, containing some
+			information about the job as well as available actions:
+		</para>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="template_job_01_filechooser.jpg"
+					format="JPG" scalefit="1" />
+			</imageobject>
+		</mediaobject>
+		<para>If you click the 'Open as template' button you will be presented
+			with a dialog where you can map the job's original columns to a new
+			set of columns:
+		</para>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="template_job_02_mapping.jpg" format="JPG"
+					scalefit="1" />
+			</imageobject>
+		</mediaobject>
+		<para>First you need to specify the datastore to use. On the left side
+			you see the name of the original datastore, but the job is not
+			restricted to use only this datastore. Select a datastore from the
+			list and the fields below for the columns will become active.
+		</para>
+		<para>Then you need to map individual columns. If you have two
+			datastore that have the same column names, you can click the "Map
+			automatically" button and they will be automatically assigned.
+			Otherwise you need to map the columns from the new datastore's
+			availabel columns.
+		</para>
+		<para>Finally your job may contain 'Job-level variables'. These are
+			configurable properties of the job that you might also want to fill
+			out.
+		</para>
+		<para>Once these 2-3 steps have been completed, click the "Open job"
+			button, and DataCleaner will be ready for executing the job on a new
+			set of columns!
+		</para>
+	</section>
+
+	<section id="writing-cleansed-data">
+		<title>Writing cleansed data to files</title>
+		<para>Although the primary focus of DataCleaner is analysis, often
+			during such analysis you will find yourself actually improving data
+			by means of applying transformers and filters on it. When this is the
+			case, obviously you will want to export the improved/cleansed data so
+			you can utilize it in other situations than the analysis.
+		</para>
+		<para>
+			Please refer to the reference chapter
+			<link linkend="writers">Writers</link>
+			for more information on writing cleansed data.
+		</para>
+	</section>
+
+</chapter>

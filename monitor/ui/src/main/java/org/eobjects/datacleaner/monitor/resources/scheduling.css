@@ -1,0 +1,333 @@
+/**
+ * DataCleaner (community edition)
+ * Copyright (C) 2013 Human Inference
+ *
+ * This copyrighted material is made available to anyone wishing to use, modify,
+ * copy, or redistribute it subject to the terms and conditions of the GNU
+ * Lesser General Public License, as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this distribution; if not, write to:
+ * Free Software Foundation, Inc.
+ * 51 Franklin Street, Fifth Floor
+ * Boston, MA  02110-1301  USA
+ */
+
+
+.SchedulingOverviewPanel .ButtonPanel {
+	text-align: left;
+	padding-left: 0;
+}
+
+.SchedulingOverviewPanel .EmptyColumn {
+	min-height: 1em;
+	width: 5%;
+	float: left;
+}
+
+.SchedulingOverviewPanel .ColumnHeaders .EmptyColumn {
+	width: 1%;
+}
+
+.SchedulingOverviewPanel .ColumnHeaders .JobColumn {
+	padding-left: 4px;
+}
+
+.SchedulingOverviewPanel .JobColumn {
+	min-height: 1em;
+	float: left;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.SchedulingOverviewPanel .ScheduleColumn {
+	min-height: 1em;
+	width: 100%;
+	float: left;
+
+}
+.SchedulingOverviewPanel .ScheduleColumn a, .SchedulingOverviewPanel .AlertsColumn a{
+	color:#858383;;
+}
+
+.SchedulingOverviewPanel .AlertsColumn {
+	border-left: 1px solid #ddd;
+    margin-left: 10px;
+    min-height: 1em;
+    padding-left: 10px;
+}
+
+.SchedulingOverviewPanel .AlertsColumn div {
+	display:inline;
+}
+
+.SchedulingOverviewPanel .ActionsColumn {
+	min-height: 1em;
+	width: 20%;
+	float: right;
+}
+
+.SchedulingOverviewPanel .ColumnHeaders {
+	font-weight: bold;
+	background: none repeat scroll 0 0 #f2f2f2;
+	color: #333;
+	height: 22px;
+	line-height: 22px;
+	padding: 8px 0;
+}
+
+/* a "row" representing a datastore header */
+.SchedulingOverviewPanel .ScheduleGroupPanel .HeadingLabel {
+	clear: both;
+	padding-left: 4px;
+	background-color: #D1D1D1;
+	color: #333;
+	margin-bottom: 0;
+	line-height: 34px;
+}
+
+/* a "row" representing a single scheduled job */
+.SchedulingOverviewPanel .ScheduleGroupPanel .SchedulePanel {
+	border-bottom: 1px solid #f0f0f0;
+	clear: both;
+	line-height: 30px;
+}
+
+.SchedulePanel {
+	font-size: 0.9em;
+	background-repeat: no-repeat;
+	background-position: 4px center;
+	min-height: 30px;
+}
+
+.SchedulePanel .ScheduleColumn {
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.SchedulePanel .ScheduleColumn a {
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.ScheduleGroupPanel a {
+	text-decoration: none;
+	color: #333;
+}
+
+.ScheduleGroupPanel a.discrete {
+	color: #666;
+}
+
+.ScheduleGroupPanel a:hover {
+	text-decoration: underline;
+	color: #377FCF;
+}
+
+.ExecuteButton {
+	background-color: #f0ad4e;
+    border-color: #eea236;
+    color: #fff;
+	padding: 5px 20px;
+	font-weight:bold;
+}
+
+.ExecuteButton:hover {
+	background-color:#ff9600;
+	border-color: #eea236;
+}
+
+.LaunchButton {
+}
+
+.SchedulePanel .ScheduleColumn .gwt-Label {
+	background-image: url("schedule.png");
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 26px;
+}
+
+.CustomizeSchedulePanel {
+	width: 600px;
+}
+
+.CustomizeSchedulePanel .triggerPanel {
+	margin-top: 20px;
+}
+
+.CustomizeSchedulePanel .triggerPanel .configurationPanel {
+	margin-left: 34px;
+	border-left: 2px solid #f0f0f0;
+	padding-left: 4px;
+}
+
+.SchedulePanel .AlertsColumn {
+	background-color: white;
+}
+
+.SchedulePanel .ActionsColumn .gwt-Button {
+	margin-left: 0px;
+	margin-right: 2px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.CreateAlertAnchor {
+	background-image: url("add.png");
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+.AlertListPanel {
+	padding-left: 2px;
+}
+
+.AlertPanel {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 26px;
+	line-height: 1em;
+	min-height: 18px;
+}
+
+.CustomizeAlertPanel {
+	width: 550px;
+	min-height: 200px;
+}
+
+.CustomizeAlertPanel .gwt-RadioButton {
+	display: block;
+	padding-right: 40px;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.AlertPanel-INTELLIGENCE,.CustomizeAlertPanel .gwt-RadioButton-INTELLIGENCE
+	{
+	background-image: url("alert-intelligence.png");
+}
+
+.AlertPanel-SURVEILLANCE,.CustomizeAlertPanel .gwt-RadioButton-SURVEILLANCE
+	{
+	background-image: url("alert-surveillance.png");
+}
+
+.AlertPanel-WARNING,.CustomizeAlertPanel .gwt-RadioButton-WARNING {
+	background-image: url("alert-warning.png");
+}
+
+.AlertPanel-FATAL,.CustomizeAlertPanel .gwt-RadioButton-FATAL {
+	background-image: url("alert-fatal.png");
+}
+
+
+.ActionsColumn .DropDownAnchor{
+	border: 1px #ddd solid;
+	padding: 4px 22px 4px 15px;
+	border-radius: 2px;
+	background-position: 94% center;
+}
+
+
+/**
+ * Job history and Execution log panels
+ */
+.ExecutionStatusPanel {
+	width: 550px;
+	height: 300px;
+	text-align: center;
+}
+
+.ExecutionStatusPanel .HeadingLabel {
+	color: black;
+	font-size: 1.5em;
+	margin-top: 30px;
+}
+
+.ExecutionStatusPanel .ResultAnchor {
+	margin-top: 30px;
+	padding-top: 180px;
+	background-image: url("result-large.png");
+	background-repeat: no-repeat;
+	background-position: top center;
+	font-size: 1.5em;
+	display: block;
+}
+
+.JobHistoryPanel {
+	width: 720px;
+}
+
+.JobHistoryPanel .ExecutionCellList {
+	float: left;
+	width: 200px;
+	overflow: auto;
+}
+
+.JobHistoryPanel .ExecutionCellList .ExecutionIdentifier span {
+	padding-left: 4px;
+	font-size: 0.85em;
+}
+
+.JobHistoryPanel .ExecutionCellList .ExecutionIdentifier span.beginDate {
+	font-size: 1em;
+}
+
+.JobHistoryPanel .ExecutionLogPanelTarget {
+	float: left;
+	width: 500px;
+	margin-left: 15px;
+}
+
+.ExecutionLogPanel {
+	width: 500px;
+}
+
+.LogOutputPanel {
+	background-color: #f0f0f0;
+	border: 1px solid #999;
+	height: 270px;
+	overflow: scroll;
+}
+
+.LogOutputPanel .LogOutputLabel {
+	white-space: pre;
+	padding: 4px;
+}
+
+.jobColumnContainer{
+	float:left; 
+	width:70%;
+	padding-left:5px;
+}
+.ScheduleGroupPanel .ActionsColumn{
+	margin-top:5px;
+}
+.pull-left {
+	float:left;
+}
+
+#SchedulingPage .showFormButton, #uploadJobs input[type="submit"]{
+	height: 30px!important;
+	padding: 4px 6px;
+	font-size: 14px;
+	margin-left: 4px;
+}
+
+#SchedulingPage #uploadJobs{
+	margin:0 0 10px 4px;
+}
+
+#uploadJobs input[type="file"] {
+	padding: 4px 0 4px 4px;
+	margin: 0;
+	height: 20px;
+	border:1px #ddd solid;
+}

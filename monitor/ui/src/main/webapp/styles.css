@@ -1,0 +1,793 @@
+/**
+ * Major page elements
+ */
+body {
+	text-align: center;
+	margin: 0 !important;
+	padding: 0px;
+}
+
+body,table td,select,input {
+	font-family: "Open Sans", sans-serif;
+	font-size: small;
+}
+
+select,input,textarea {
+	background-color: white;
+	padding: 5px 4px;
+	border: 1px solid #CCC;
+	border-top: 1px solid #999;
+	border-radius: 2px;
+	font-family: "Open Sans", sans-serif;
+}
+
+input[type="file"] {
+	border: none;
+	background-color: transparent;
+	font-size: 12px;
+	line-height: 12px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+	border: none;
+	background-color: transparent;
+}
+
+input[type="submit"], input[type="button"], button {
+	font-family: "Open Sans", sans-serif;
+	font-size: 0.9em;
+	text-decoration: none;
+	cursor: pointer;
+	height: 26px;
+	border: 1px solid #BBB;
+	border-bottom-color: #A0A0A0;
+	border-radius: 3px;
+	background-color: #F1F1F1;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover, button:hover {
+	border-color: #939393;
+}
+
+input[type="submit"]:active, input[type="button"]:active, button:active {
+	border: 1px inset #ccc;
+}
+
+optgroup {
+	font-family: "Ubuntu", sans-serif;
+	font-weight: normal;
+	font-style: normal;
+	color: #5594DD;
+	background-color: #f2f2f2;
+}
+
+option {
+	font-family: "Open Sans", sans-serif;
+	font-weight: normal;
+	font-style: normal;
+	color: black;
+	background-color: white;
+}
+
+h1,h2,h3,h4,h5 {
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: normal;
+}
+
+a {
+	color: #5594DD;
+}
+
+ul {
+	list-style: square;
+	margin-left: 10px;
+	padding-left: 0;
+}
+
+li {
+	list-style: square;
+	margin-left: 10px;
+	padding-left: 0px;
+}
+
+/*
+ * Page containers
+ */
+div.pageContainer {
+	margin-top: 0;
+}
+
+div.pageHeader {
+	background-color: #333;
+	height: 51px;
+	background-image: url("images/header_bg.png");
+	background-repeat: repeat-x;
+}
+
+div.pageHeader div.logo {
+	margin-left: auto;
+	margin-right: auto;
+	width: 904px;
+	height: 55px;
+	display: block;
+	background-image: url("images/header_logo.png");
+	background-repeat: no-repeat;
+}
+
+div.pageContent {
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 80px;
+	width: 904px;
+	text-align: left;
+}
+
+/*
+ * Popup containers
+ */
+div.popupPageContainer {
+	margin-top: 0;
+}
+
+div.popupPageHeader {
+	background-color: #333;
+	height: 51px;
+	background-image: url("images/header_bg.png");
+	background-repeat: repeat-x;
+}
+
+div.popupPageHeader div.logo {
+	margin-left: auto;
+	margin-right: auto;
+	height: 55px;
+	display: block;
+	background-image: url("images/header_logo.png");
+	background-repeat: no-repeat;
+}
+
+div.popupPageContent {
+	margin-top: 10px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+/**
+ * Infographic parts
+ */
+.InfographicContainer {
+	text-align: left;
+	width: 675px;
+}
+
+.InfographicPart {
+	width: 675px;
+	background-repeat: no-repeat;
+	background-position: center top;
+	position: relative;
+	float: none;
+}
+
+.InfographicIntro {
+	background-image: url("images/infographic_top.png");
+	height: 475px;
+}
+
+.InfographicIntro h1 {
+	font-size: 20px;
+	font-weight: normal;
+	color: #666;
+	display: block;
+	position: relative;
+	left: 20px;
+	top: 20px;
+}
+
+.InfographicIntro .ScrollDownTeaser {
+	font-family: 'Lobster', sans-serif;
+	font-weight: normal;
+	font-size: 22px;
+	color: white;
+	display: block;
+	position: relative;
+	left: 70px;
+	top: 76px;
+	width: 60px;
+	text-align: center;
+}
+
+.InfographicIntro .ScrollDownTeaser a {
+	color: white;
+	text-decoration: none;
+}
+
+.InfographicPart h2 {
+	font-family: 'Lobster', sans-serif;
+	font-weight: normal;
+	font-size: 26px;
+	color: #5594DD;
+	margin: 0px;
+	margin-top: 60px;
+}
+
+.InfographicPart .Description {
+	color: #666;
+	font-size: 0.9em;
+	margin: 0;
+	padding: 0;
+}
+
+.InfographicEvolution {
+	background-image: url("images/infographic_part_evolution.png");
+	background-position: center 60px;
+	height: 310px;
+}
+
+.InfographicImprove {
+	background-image: url("images/infographic_part_improve.png");
+	background-position: center 60px;
+	height: 390px;
+}
+
+.InfographicShare {
+	background-image: url("images/infographic_part_share.png");
+	background-position: center 60px;
+	height: 400px;
+}
+
+.InfographicConnect {
+	background-image: url("images/infographic_part_connect.png");
+	background-position: center 65px;
+	height: 310px;
+}
+
+/**
+ * Scales any img with class 'scalable_background' to become a background image of the page, scaled to the width of the window.
+ */
+img.scalable_background {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/*
+* Navigation menu
+*/
+.navContainer {
+	margin-top: -28px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 904px;
+	height: 22px;
+}
+
+#nav {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	margin-left: 280px;
+}
+
+#nav li {
+	line-height: 18px;
+	list-style-type: none;
+	margin: 0px;
+	margin-right: 10px;
+	padding: 3px;
+	padding-left: 4px;
+	padding-right: 4px;
+	float: left;
+	background-color: #555;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+#nav li.selected {
+	background-color: white;
+}
+
+#nav li a {
+	color: white;
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	padding-left: 26px;
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+
+#nav li.selected a {
+	background-color: transparent;
+	color: black;
+}
+/**
+ * User panel
+ */
+#user_panel {
+	font-family: "Ubuntu", sans-serif;
+	background-image: url("images/user.png");
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	background-color: #555;
+	position: relative;
+	float: right;
+	height: 20px;
+	line-height: 20px;
+	font-size: 0.9em;
+	padding-left: 30px;
+	padding-right: 10px;
+	color: white;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+#user_panel span.username {
+	font-weight: bold;
+}
+
+#user_panel span.tenant {
+	font-size: 0.8em;
+}
+
+#user_panel span.logout a {
+	color: white;
+	text-decoration: none;
+}
+
+#user_panel span.logout a:hover {
+	text-decoration: underline;
+}
+
+/**
+ * Footer
+ */
+.pageFooter {
+	font-family: "Ubuntu", sans-serif;
+	height: 34px;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	background-color: white;
+	background-image: url("images/login_footer_bg.png");
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	font-size: 1em;
+	color: #333;
+}
+
+.pageFooter .logo {
+	float: right;
+	line-height: 34px;
+	height: 34px;
+	padding-right: 100px;
+	background-image: url("images/login_footer_logo.png");
+	background-repeat: no-repeat;
+	background-position: right 5px;
+}
+
+.pageFooter .logo .tagline {
+	display: block;
+}
+
+.pageFooter .versionInformation {
+	float: left;
+	line-height: 34px;
+	margin-left: 6px;
+}
+
+/**
+ * Login page
+ */
+.login_panel {
+	position: fixed;
+	top: 100px;
+	left: 0px;
+	background-color: #333;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	padding: 20px;
+	padding-left: 50px;
+	color: #eee;
+	text-align: center;
+	width: 300px;
+	z-index: 1000;
+}
+
+.login_demo_accounts_panel .warning {
+	text-align: left;
+	padding-left: 40px;
+	margin-bottom: 30px; 
+	color: red;
+	font-size: 0.9em;
+}
+
+h3.login_panel_header {
+	text-align: left;
+	background-image: url("images/user.png");
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 40px;
+	margin: 0px;
+}
+
+.login_panel_content {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	width: 220px;
+}
+
+.login_panel_content p {
+	margin: 0px;
+	padding: 0px;
+}
+
+.login_panel_content input {
+	padding: 5px;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+.login_demo_accounts_panel {
+	position: fixed;
+	top: 300px;
+	left: 0px;
+	background-color: #ddd;
+	border-bottom-right-radius: 10px;
+	padding: 20px;
+	padding-top: 40px;
+	padding-left: 50px;
+	color: #333;
+	text-align: center;
+	width: 300px;
+	z-index: 900;
+	padding-left: 50px;
+}
+
+.login_demo_accounts_panel ul {
+	
+}
+
+/**
+ * Tab headers
+ */
+.DashboardTabTitle {
+	background-image: url("images/dashboard.png");
+}
+
+.SchedulingTabTitle {
+	background-image: url("images/scheduling.png");
+}
+
+.RepositoryTabTitle {
+	background-image: url("images/repository.png");
+}
+
+.DatastoresTabTitle {
+	background-image: url("images/datastores.png");
+}
+
+/**
+ * Shared widgets
+ */
+div.loader {
+	width: 100%;
+	min-width: 32px;
+	background: url("images/loader.gif") no-repeat center center;
+	height: 32px;
+}
+
+.blue {
+	color: #5594dd;
+}
+
+.orange {
+	color: #ffa800;
+}
+
+.discrete {
+	color: #666;
+}
+
+.spacer {
+	clear: both;
+	margin-top: 10px;
+}
+
+.descriptionLabel {
+	color: #333;
+	background-color: #f4f4d3;
+	padding: 4px;
+	border: 1px solid #a0a0a0;
+}
+
+.descriptionLabel p {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+/**
+ * Error dialog styling
+ */
+.ErrorDialog {
+	text-align: left;
+}
+
+.ErrorDialog .Caption {
+	
+}
+
+.ErrorDialog .dialogContent {
+	width: 500px;
+}
+
+.ErrorDialog .Message {
+	
+}
+
+.ErrorDialog .Details,.ErrorDialog .AdditionalMessageDetails {
+	padding: 5px;
+	margin: 5px;
+	width: 450px;
+	white-space: pre;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	height: 250px;
+	overflow: auto;
+}
+
+/**
+ * Datastores page
+ */
+.datastoreList,.datastoreList li {
+	list-style: none;
+}
+
+.datastoreList .datastore {
+	clear: both;
+	margin-bottom: 40px;
+}
+
+.datastoreList .datastore .name {
+	background-image: url("images/datastore_database.png");
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 30px;
+}
+
+.datastoreList .datastore.FileDatastore .name {
+	background-image: url("images/datastore_file.png");
+}
+
+.datastoreList .datastore.SalesforceDatastore .name {
+	background-image: url("images/datastore_salesforce.png");
+}
+
+.datastoreList .datastore.SugarCrmDatastore .name {
+	background-image: url("images/datastore_sugarcrm.png");
+}
+
+.datastoreList .datastore .description {
+	margin-left: 30px;
+	color: #333;
+	background-color: #D1D1D1;
+	padding: 4px;
+	border-bottom: none;
+}
+
+.datastoreList .datastore .details {
+	margin-left: 30px;
+	color: #333;
+	padding: 4px;
+	background-color: #f2f2f2;
+}
+
+.datastoreList .datastore .details .label {
+	clear: both;
+	display: block;
+	float: left;
+	width: 14%;
+	display: inline;
+}
+
+.datastoreList .datastore .details .value {
+	display: block;
+	float: left;
+	color: black;
+	max-width: 85%;
+}
+
+.datastoreList .datastore .warning {
+	margin-left: 10px;
+	color: red;
+}
+
+input.RemoveButton {
+	background-repeat: no-repeat;
+	background-position: 4px center;
+	color: #cc0000;
+	min-width: 30px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 3px;
+	padding-right: 3px;
+	margin-left: 0px;
+	margin-right: 2px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+button.LaunchButton {
+	background-repeat: no-repeat;
+	background-position: 4px center;
+	background-image: url("images/launch.png") !important;
+	min-width: 30px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 28px;
+	padding-right: 3px;
+	margin-left: 0px;
+	margin-right: 2px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+/**
+ * Repository page
+ */
+.uploadConfigurationPanel {
+	background-color: #f4f4d3;
+	float: right;
+	clear: right;
+	margin-top: 4px;
+	background-image: url("images/repository_file.png");
+	background-repeat: no-repeat;
+	padding: 10px;
+	padding-left: 36px;
+	background-position: 8px 22px;
+}
+
+.uploadConfigurationPanel p { 
+	padding: 0px;
+	margin: 0px;
+}
+
+.uploadJobPanel form {
+	display: inline;
+}
+
+.uploadJobPanel .showFormButton {
+	background-color: transparent;
+	border: none;
+	background-image: url("images/upload.png");
+	background-repeat: no-repeat;
+	padding: 0;
+	width: 22px;
+	height: 22px;
+	cursor: pointer;
+}
+ 
+.repositoryView {
+	margin-left: 22px;
+	list-style: none;
+	line-height: 22px;
+}
+
+.repositoryView li {
+	list-style: none;
+	margin: 0px;
+	margin-bottom: 4px;
+	padding: 0px;
+	padding-left: 26px;
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.repositoryView .folder {
+	background-image: url("images/repository_folder.png");
+}
+
+.repositoryView .file {
+	background-image: url("images/repository_file.png");
+}
+
+.repositoryView .file.DATASTORE {
+	background-image: url("images/datastore_database.png");
+}
+
+.repositoryView .file.ANALYSIS_JOB {
+	background-image: url("images/repository_file_job.png");
+}
+
+.repositoryView .file.ANALYSIS_RESULT {
+	background-image: url("images/repository_file_result.png");
+}
+
+.repositoryView .file.TIMELINE_SPEC {
+	background-image: url("images/repository_file_timeline.png");
+}
+
+button.DownloadButton {
+	background-repeat: no-repeat;
+	background-position: 4px center;
+	background-image: url("images/save.png") !important;
+	min-width: 30px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 28px;
+	padding-right: 3px;
+	margin-left: 0px;
+	margin-right: 2px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+button.QueryButton {
+	background-repeat: no-repeat;
+	background-position: 4px center;
+	background-image: url("images/query.png") !important;
+	min-width: 30px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 28px;
+	padding-right: 3px;
+	margin-left: 0px;
+	margin-right: 2px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.timeline_popup {
+	position: absolute;
+	left: 0;
+	background: white;
+	color: black;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+button.orangeButton, input.orangeButton {
+	color: #fff;
+	background-color:#f0ad4e;
+	border-color: #eea236;
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	border-radius: 4px;
+	height:auto;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+button.orangeButton.gwt-Button-ImageTextButton, input.orangeButton.gwt-Button-ImageTextButton {
+	padding-left: 32px;
+	height: 30px !important;
+}
+
+button.orangeButton:disabled, button.orangeButton:disabled, input.orangeButton:disabled, input.orangeButton:disabled {
+	background-color: #ddd;
+	cursor: default;
+	border: 1px solid #bbb;
+}
+
+button.orangeButton:hover, input.orangeButton:hover {
+	background-color:#ff9600;
+	border-color: #eea236;
+}
