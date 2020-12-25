@@ -1,0 +1,340 @@
+/**
+ * redpen: a text inspection tool
+ * Copyright (c) 2014-2015 Recruit Technologies Co., Ltd. and contributors
+ * (see CONTRIBUTORS.md)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+body {
+    background-color: #c0c5b2;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4 {
+    color: #414439;
+}
+
+a {
+    color: rgb(62, 63, 58);
+    cursor: pointer;
+}
+
+a:hover {
+    color: rgb(62, 63, 58);
+    cursor: pointer;
+}
+
+label {
+    margin-bottom: 0px;
+}
+
+textarea {
+    resize: none;
+}
+
+.navbar-default {
+    background-color: rgba(114, 117, 106, 1);
+    border-color: rgb(107, 110, 100);
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #eee;
+    text-transform: uppercase;
+    font-size: 11px;
+    line-height: 22px;
+    font-weight: 500;
+}
+
+.dropdown-menu>li>a {
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.navbar-brand {
+    padding-top: 11px;
+}
+
+.navbar-brand img {
+    height: 28px;
+}
+
+.alert-warning, .alert-info, .alert-success {
+    padding-left: 4px;
+    border-radius: 2px;
+}
+
+.error strong {
+    color: red;
+}
+
+.radio, .checkbox {
+    margin-top: 0;
+}
+
+#main {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+}
+
+#redpen-editor {
+    padding: 19px;
+}
+
+#redpen-editor,
+#redpen-results {
+    min-height: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+#redpen-results h4 {
+    margin-top: 0;
+}
+
+#redpen-results-json {
+    background-color: rgb(255, 245, 224);
+    color: rgb(6, 45, 5);
+    min-height: 100%;
+    height: 100%;
+    overflow: auto;
+    font-size: 11px;
+    line-height: 12px;
+    font-family: monospace;
+    white-space: pre;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#redpen-results-report {
+    background-color: #111;
+    color: #06F400;
+    min-height: 100%;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#redpen-settings {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+#redpen-version {
+    position: absolute;
+    right: 4px;
+    bottom: 0;
+    font-size: 10px;
+    line-height: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: right;
+}
+
+#redpen-option-results {
+    text-align: center;
+    list-style: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+#redpen-option-results li {
+    display: inline-block;
+    width: 52px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.redpen-option-selected {
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.col-md-5 {
+    padding-right: 0;
+}
+
+.redpen-fixed-container {
+    height: 100%;
+}
+
+.redpen-fixed-row {
+    height: 80%;
+}
+
+.redpen-fixed-row>div {
+    height: 100%;
+}
+
+.redpen-header-row {
+    height: 10%;
+    min-height: 100px;
+}
+
+.redpen-header-row>div {
+    height: 100%;
+}
+
+.redpen-error-section {
+}
+
+.redpen-error-sentence {
+    background-image: url(../images/redpen-logo-nib-icon.png);
+    background-size: 16px 16px;
+    background-position: left 5px;
+    background-repeat: no-repeat;
+    padding-left: 18px;
+    margin-bottom: 24px;
+}
+
+.redpen-info-message {
+    color: rgb(74, 152, 100);
+    background-image: url(../images/redpen-logo-nib-icon.png);
+    background-size: 16px 16px;
+    background-position: left 5px;
+    background-repeat: no-repeat;
+    padding-left: 18px;
+}
+
+.redpen-clear-button {
+    margin-top: 4px;
+}
+
+.redpen-error-validator {
+    display: inline-block;
+    padding: 1px;
+    margin-left: 2px;
+    font-size: 9px;
+    color: #aaa;
+    vertical-align: middle;
+}
+
+.redpen-red {
+    color: #a70c00;
+}
+
+.redpen-config-summary-panel {
+    display: inline-block;
+    width: 350px;
+    padding: 12px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 12px;
+}
+
+.redpen-config-summary-panel-header {
+    color: orange;
+}
+
+.redpen-config-summary-panel th {
+    font-weight: normal;
+    color: rgb(132, 204, 255);
+    padding-right: 4px;
+}
+
+.redpen-config-summary-panel tr {
+    white-space: pre-wrap;
+}
+
+.redpen-config-summary-panel tr {
+    vertical-align: top;
+}
+
+.redpen-validators {
+    font-size: 11px;
+    line-height: 18px;
+}
+
+.redpen-validators .checkbox {
+    margin-bottom: 0;
+}
+
+.redpen-validators label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.redpen-validators .checkbox i {
+    color: #1C6100;
+}
+
+.redpen-error-list {
+    margin-left: 0;
+    padding-right: 0;
+    list-style-type: none;
+    padding-left: 18px;
+    margin-bottom: 20px;
+}
+
+.redpen-error-message {
+    color: rgb(124, 47, 0);
+    cursor: help;
+}
+
+.redpen-error-message-annotated::before {
+    background-color: #FF713D !important;
+}
+
+.redpen-error-list li {
+    counter-increment: step-counter;
+}
+
+.redpen-error-list li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-size: 80%;
+    background-color: grey;
+    color: white;
+    padding: 0;
+    display: inline-block;
+    text-align: center;
+    min-width: 20px;
+    border-radius: 3px;
+}
+
+.redpen-annotated-sentence i {
+    color: #8d3700;
+    font-style: normal;
+}
+
+.redpen-annotated-sentence b {
+    cursor: help;
+    font-weight: normal;
+    background-color: #FF713D;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 60%;
+    display: inline-block;
+    line-height: 60%;
+    padding: 3px;
+    vertical-align: top;
+    text-align: center;
+    margin-right: 1px;
+}
+

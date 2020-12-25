@@ -1,0 +1,11 @@
+{
+  "name": "RedPen",
+  "description": "RedPen is a proofreading tool to help writers or programmers who write technical documents or manuals.",
+  "logo": "http://redpen.cc/img/logo/logo-001.png",
+  "success_url": "/",
+  "keywords": [
+    "redpen",
+    "validator",
+    "java"
+  ]
+}
