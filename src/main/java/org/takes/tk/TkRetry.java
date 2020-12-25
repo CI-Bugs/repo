@@ -36,7 +36,7 @@ import org.takes.Take;
  * will retry a few times.
  *
  * @author Hamdi Douss (douss.hamdi@gmail.com)
- * @version $Id: cd32792f5c17d2052d536f5e708a23f393b706f3 $
+ * @version $Id: 4b2a52b9c328b8c4750fd6857550623a3960e2c7 $
  * @since 0.28.3
  */
 public final class TkRetry implements Take {
@@ -80,15 +80,12 @@ public final class TkRetry implements Take {
         int attempts = 0;
         final ArrayList<IOException> failures =
             new ArrayList<IOException>(this.count);
-        final ArrayList<String> messages =
-                new ArrayList<String>(this.count);
         while (attempts < this.count) {
             try {
                 return this.take.act(req);
             } catch (final IOException ex) {
                 ++attempts;
                 failures.add(ex);
-                messages.add(ex.getMessage());
                 this.sleep();
             }
         }
@@ -96,7 +93,7 @@ public final class TkRetry implements Take {
             String.format(
                 "failed after %d attempts: %s",
                 failures.size(),
-                Joiner.on(", ").join(messages)
+                Joiner.on(", ").join(failures)
             ),
             failures.get(failures.size() - 1)
         );
