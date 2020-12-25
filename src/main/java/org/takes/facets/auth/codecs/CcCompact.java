@@ -1,0 +1,88 @@
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Yegor Bugayenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+package org.takes.facets.auth.codecs;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import lombok.EqualsAndHashCode;
+import org.takes.facets.auth.Identity;
+
+/**
+ * Compact codec.
+ *
+ * <p>The class is immutable and thread-safe.
+ *
+ * @author Yegor Bugayenko (yegor@teamed.io)
+ * @version $Id: b4521cc1e9c137f39c5bcc51c6e9035c04d5530e $
+ * @since 0.5
+ */
+@EqualsAndHashCode
+public final class CcCompact implements Codec {
+
+    @Override
+    public byte[] encode(final Identity identity) throws IOException {
+        final ByteArrayOutputStream data = new ByteArrayOutputStream();
+        final DataOutputStream stream = new DataOutputStream(data);
+        try {
+            stream.writeUTF(identity.urn());
+            for (final Map.Entry<String, String> ent
+                : identity.properties().entrySet()) {
+                stream.writeUTF(ent.getKey());
+                stream.writeUTF(ent.getValue());
+            }
+        } catch (final IOException ex) {
+            throw new IllegalArgumentException(ex);
+        } finally {
+            stream.close();
+        }
+        return data.toByteArray();
+    }
+
+    @Override
+    public Identity decode(final byte[] bytes) throws IOException {
+        final ConcurrentMap<String, String> map =
+            new ConcurrentHashMap<String, String>(0);
+        final DataInputStream stream = new DataInputStream(
+            new ByteArrayInputStream(bytes)
+        );
+        try {
+            final String urn = stream.readUTF();
+            while (stream.available() > 0) {
+                map.put(stream.readUTF(), stream.readUTF());
+            }
+            return new Identity.Simple(urn, map);
+        } catch (final IOException ex) {
+            throw new DecodingException(ex);
+        } finally {
+            stream.close();
+        }
+    }
+
+}
