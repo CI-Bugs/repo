@@ -1,0 +1,21 @@
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+  implementation project(':okhttp')
+  implementation project(':mockwebserver-deprecated')
+  implementation project(':okhttp-testing-support')
+  implementation project(':okhttp-tls')
+  implementation deps.animalSniffer
+  implementation deps.moshi
+  kapt deps.moshiKotlin
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(14)
+  }
+}
+
+tasks.withType(JavaCompile) {
+  options.warnings = false
+}
