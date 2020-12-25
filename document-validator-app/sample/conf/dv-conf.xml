@@ -1,0 +1,4 @@
+<configuration>
+  <validator>sample/conf/validation-conf.xml</validator>
+  <character-table>sample/conf/symbol-conf-en.xml</character-table>
+</configuration>

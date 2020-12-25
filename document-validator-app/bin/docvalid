@@ -1,0 +1,76 @@
+#!/bin/bash
+
+VERSION=0.1
+RUN_SCRIPT="$(basename "${0}")"
+DV_HOME=`dirname "$this"`
+MAIN_CLASS="org.unigram.docvalidator.Main"
+
+usage() {
+    echo "Usage: $RUN_SCRIPT [OPTIONS] INPUT-FILES"
+    echo
+    echo "Options:"
+    echo "  -c, --configuration [CONFIG_FILE]"
+    echo "  -f, --input-format [INPUT-FORMAT (Default plain)]"
+    echo "  -r, --result-format [RESULT-FORMAT (Default plain)]"
+    echo "  -h, --help"
+    echo
+}
+
+main() {
+    if [ $# -lt 1 ]; then
+	usage; exit 1;
+    fi
+
+    INPUT_FORMAT="plain"
+    RESULT_FORMAT="plain"
+    for OPT in "$@"
+    do
+       case "$OPT" in
+            '-h'|'--help' )
+                usage
+                exit 0
+                ;;
+            '-c'|'--config' )
+                if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+                    echo "$RUN_SCRIPT: option requires an argument -- $1" 1>&2
+                fi
+                CONFIG_FILE=$"$2"
+                shift 2
+                ;;
+            '-f'|'--input-format' )
+                if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+                    echo "$RUN_SCRIPT: option requires an argument -- $1" 1>&2
+                fi
+                INPUT_FORMAT="$2"
+                shift 2
+                ;;
+            '-r'|'--result-format' )
+                if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+                    echo "$RUN_SCRIPT: option requires an argument -- $1" 1>&2
+                fi
+                RESULT_FORMAT="$2"
+                shift 2
+                ;;
+            '--version' )
+                echo "Version: $VERSION"
+                exit 0
+                ;;
+            -*)
+                echo "$RUN_SCRIPT: illegal option -- '$(echo $1 | sed 's/^-*//')'" 1>&2
+                exit 1
+                ;;
+        esac
+    done
+    INPUT_FILES="$@"
+
+    # add jars to class path
+    DV_CLASSPATH=lib
+    for f in $DV_HOME/lib/*; do
+	DV_CLASSPATH=$DV_CLASSPATH:$f
+    done
+    export CLASSPATH=$DV_CLASSPATH:$CLASSPATH
+
+    java ${MAIN_CLASS} --conf ${CONFIG_FILE} --format ${INPUT_FORMAT} --input ${INPUT_FILES} --result-format ${RESULT_FORMAT}
+}
+
+[ ${#BASH_SOURCE[@]} = 1 ] && main "$@"
