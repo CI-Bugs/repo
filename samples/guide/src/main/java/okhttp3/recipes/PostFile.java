@@ -25,7 +25,7 @@ import okhttp3.Response;
 
 public final class PostFile {
   public static final MediaType MEDIA_TYPE_MARKDOWN
-      = MediaType.get("text/x-markdown; charset=utf-8");
+      = MediaType.parse("text/x-markdown; charset=utf-8");
 
   private final OkHttpClient client = new OkHttpClient();
 
@@ -34,7 +34,7 @@ public final class PostFile {
 
     Request request = new Request.Builder()
         .url("https://api.github.com/markdown/raw")
-        .post(RequestBody.create(file, MEDIA_TYPE_MARKDOWN))
+        .post(RequestBody.create(MEDIA_TYPE_MARKDOWN, file))
         .build();
 
     try (Response response = client.newCall(request).execute()) {

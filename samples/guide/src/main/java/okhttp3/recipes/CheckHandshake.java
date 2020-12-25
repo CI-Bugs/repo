@@ -28,8 +28,7 @@ import okhttp3.Response;
 public final class CheckHandshake {
   /** Rejects otherwise-trusted certificates. */
   private static final Interceptor CHECK_HANDSHAKE_INTERCEPTOR = new Interceptor() {
-    Set<String> blacklist = Collections.singleton(
-        "sha256/afwiKY3RxoMmLkuRW1l7QsPZTJPwDS2pdDROQjXw8ig=");
+    Set<String> blacklist = Collections.singleton("sha1/DmxUShsZuNiqPQsX2Oi9uv2sCnw=");
 
     @Override public Response intercept(Chain chain) throws IOException {
       for (Certificate certificate : chain.connection().handshake().peerCertificates()) {

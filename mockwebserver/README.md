@@ -122,15 +122,14 @@ You can, for example, filter the request instead of using `server.enqueue()`.
 final Dispatcher dispatcher = new Dispatcher() {
 
     @Override
-    public MockResponse dispatch (RecordedRequest request) throws InterruptedException {
+    public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
 
-        switch (request.getPath()) {
-            case "/v1/login/auth/":
-                return new MockResponse().setResponseCode(200);
-            case "/v1/check/version/":
-                return new MockResponse().setResponseCode(200).setBody("version=9");
-            case "/v1/profile/info":
-                return new MockResponse().setResponseCode(200).setBody("{\\\"info\\\":{\\\"name\":\"Lucas Albuquerque\",\"age\":\"21\",\"gender\":\"male\"}}");
+        if (request.getPath().equals("/v1/login/auth/")){
+            return new MockResponse().setResponseCode(200);
+        } else if (request.getPath().equals("v1/check/version/")){
+            return new MockResponse().setResponseCode(200).setBody("version=9");
+        } else if (request.getPath().equals("/v1/profile/info")) {
+            return new MockResponse().setResponseCode(200).setBody("{\\\"info\\\":{\\\"name\":\"Lucas Albuquerque\",\"age\":\"21\",\"gender\":\"male\"}}");
         }
         return new MockResponse().setResponseCode(404);
     }
@@ -141,8 +140,19 @@ server.setDispatcher(dispatcher);
 
 ### Download
 
-```kotlin
-testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+Get MockWebServer via Maven:
+```xml
+<dependency>
+  <groupId>com.squareup.okhttp3</groupId>
+  <artifactId>mockwebserver</artifactId>
+  <version>(insert latest version)</version>
+  <scope>test</scope>
+</dependency>
+```
+
+or via Gradle 
+```groovy
+testCompile 'com.squareup.okhttp3:mockwebserver:(insert latest version)'
 ```
 
 ### License

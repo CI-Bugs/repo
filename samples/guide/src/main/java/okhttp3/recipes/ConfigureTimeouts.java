@@ -25,10 +25,9 @@ public final class ConfigureTimeouts {
 
   public ConfigureTimeouts() throws Exception {
     client = new OkHttpClient.Builder()
-        .connectTimeout(5, TimeUnit.SECONDS)
-        .writeTimeout(5, TimeUnit.SECONDS)
-        .readTimeout(5, TimeUnit.SECONDS)
-        .callTimeout(10, TimeUnit.SECONDS)
+        .connectTimeout(10, TimeUnit.SECONDS)
+        .writeTimeout(10, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
         .build();
   }
 

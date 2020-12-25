@@ -30,7 +30,7 @@ public final class PostMultipart {
    * these examples, please request your own client ID! https://api.imgur.com/oauth2
    */
   private static final String IMGUR_CLIENT_ID = "9199fdef135c122";
-  private static final MediaType MEDIA_TYPE_PNG = MediaType.get("image/png");
+  private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
   private final OkHttpClient client = new OkHttpClient();
 
@@ -40,9 +40,7 @@ public final class PostMultipart {
         .setType(MultipartBody.FORM)
         .addFormDataPart("title", "Square Logo")
         .addFormDataPart("image", "logo-square.png",
-            RequestBody.create(
-                new File("docs/images/logo-square.png"),
-                MEDIA_TYPE_PNG))
+            RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png")))
         .build();
 
     Request request = new Request.Builder()
