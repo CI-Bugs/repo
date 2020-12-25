@@ -19,7 +19,7 @@ awkward-to-reproduce situations like 500 errors or slow-loading responses.
 ### Example
 
 Use MockWebServer the same way that you use mocking frameworks like
-[Mockito](https://github.com/mockito/mockito):
+[Mockito](https://code.google.com/p/mockito/):
 
 1. Script the mocks.
 2. Run application code.
@@ -42,7 +42,7 @@ public void test() throws Exception {
   server.start();
 
   // Ask the server for its URL. You'll need this to make HTTP requests.
-  HttpUrl baseUrl = server.url("/v1/chat/");
+  URL baseUrl = server.getUrl("/v1/chat/");
 
   // Exercise your application code, which should make those HTTP requests.
   // Responses are returned in the same order that they are enqueued.
@@ -108,7 +108,7 @@ Verify requests by their method, path, HTTP version, body, and headers.
 RecordedRequest request = server.takeRequest();
 assertEquals("POST /v1/chat/send HTTP/1.1", request.getRequestLine());
 assertEquals("application/json; charset=utf-8", request.getHeader("Content-Type"));
-assertEquals("{}", request.getBody().readUtf8());
+assertEquals("{}", request.getUtf8Body());
 ```
 
 #### Dispatcher
@@ -122,15 +122,14 @@ You can, for example, filter the request instead of using `server.enqueue()`.
 final Dispatcher dispatcher = new Dispatcher() {
 
     @Override
-    public MockResponse dispatch (RecordedRequest request) throws InterruptedException {
+    public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
 
-        switch (request.getPath()) {
-            case "/v1/login/auth/":
-                return new MockResponse().setResponseCode(200);
-            case "/v1/check/version/":
-                return new MockResponse().setResponseCode(200).setBody("version=9");
-            case "/v1/profile/info":
-                return new MockResponse().setResponseCode(200).setBody("{\\\"info\\\":{\\\"name\":\"Lucas Albuquerque\",\"age\":\"21\",\"gender\":\"male\"}}");
+        if (request.getPath().equals("/v1/login/auth/")){
+            return new MockResponse().setResponseCode(200);
+        } else if (request.getPath().equals("v1/check/version/")){
+            return new MockResponse().setResponseCode(200).setBody("version=9");
+        } else if (request.getPath().equals("/v1/profile/info")) {
+            return new MockResponse().setResponseCode(200).setBody("{\\\"info\\\":{\\\"name\":\"Lucas Albuquerque\",\"age\":\"21\",\"gender\":\"male\"}}");
         }
         return new MockResponse().setResponseCode(404);
     }
@@ -141,8 +140,19 @@ server.setDispatcher(dispatcher);
 
 ### Download
 
-```kotlin
-testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+Get MockWebServer via Maven:
+```xml
+<dependency>
+  <groupId>com.squareup.okhttp</groupId>
+  <artifactId>mockwebserver</artifactId>
+  <version>(insert latest version)</version>
+  <scope>test</scope>
+</dependency>
+```
+
+or via Gradle 
+```groovy
+testCompile 'com.squareup.okhttp:mockwebserver:(insert latest version)'
 ```
 
 ### License
