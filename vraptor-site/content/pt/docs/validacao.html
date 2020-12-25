@@ -1,0 +1,199 @@
+---
+title: Validação
+---
+
+# Validação
+
+A validação do VRaptor tira proveito do Bean Validation, especificação presente no Java EE 7 que permite validar nosso modelo baseado em anotações. Com o Bean Validation você pode usar as validações já existentes na especificação ou criar suas próprias anotações.
+
+~~~
+#!java
+public class Cliente {
+	// valida se o nome não é nulo e possui tamanho entre 10 e 50
+	@NotNull @Size(min=10, max=50) private String nome;
+
+	// valida se a data de nascimento está no passado
+	@Past private Date nascimento;
+}
+~~~
+
+Em seu controller:
+
+~~~
+#!java
+public void cadastrar(@NotNull @Valid Cliente cliente) {
+	// em caso de erros irá redirecionar para a página de formulário
+	validation.onErrorForwardTo(this).formulario();
+}
+~~~
+
+**Nota**: Se sua aplicação usa Hibernate ou JPA e você tem seu modelo anotado com as anotações do Bean Validation, você precisará chamar os métodos `Session.flush()` ou `EntityManager.flush()` para disparar a validação do Bean Validation antes de fazer qualquer `redirect` ou `forward`. O método `flush()` é responsável por sincronizar as alterações no estado dos objetos com o banco de dados. Sendo assim as validações do Bean Validation em entidates só serão executadas no `flush()`.
+
+
+##Criando validações customizadas
+
+Com o Bean Validator você pode criar anotações com suas validações customizadas. Se você quer, por exemplo, validar se o telefone está no formato `(00) 0000-0000`, você pode criar uma anotação assim:
+
+~~~
+#!java
+@Documented
+@Constraint(validatedBy = {})
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+@Retention(RUNTIME)
+@ReportAsSingleViolation
+@Pattern(regexp = "\\((\\d{2})\\) (\\d{4})-(\\d{4})")
+public @interface PhoneNumber {
+	// você pode colocar uma mensagem fixa, por exemplo, "Telefone inválido" ou
+	// usar uma mensagem de um ResourceBundle, bastando então colocar entre {}
+	String message() default "{br.com.vraptor.validations.phonenumber.message}";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
+}
+~~~
+
+
+Você pode também criar validações mais complexas que fazem acesso ao banco de dados, ou algum componente existente. Se você quiser validar se o login de um usuário já está em uso, basta criar o código abaixo:
+
+~~~
+#!java
+@Target({ ElementType.PARAMETER })
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = { LoginAvailableValidator.class })
+@Documented
+public @interface LoginAvailable {
+
+    String message() default "{login_already_exists}";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+}
+~~~
+
+E agora o `LoginAvailableValidator` que fará a validação:
+
+~~~
+#!java
+public class LoginAvailableValidator implements ConstraintValidator<LoginAvailable, User> {
+
+	@Inject private UserDao userDao;
+
+	public boolean isValid(User user, ConstraintValidatorContext context) {
+		return !userDao.containsUserWithLogin(user.getLogin());
+	}
+}
+~~~
+
+Note no código que é possível injetar qualquer componente gerenciável pelo CDI, que pode ser uma DAO ou qualquer outro componente.
+
+##Redirecionando em caso de erro
+
+Quando ocorre um erro de validação, você pode redirecionar o usuário para qualquer outra tela. Abaixo alguns exemplos:
+
+~~~
+#!java
+validator.onErrorForwardTo(MusicController.class).list() ==> validator.onErrorUse(logic()).forwardTo(MusicController.class).list();
+validator.onErrorRedirectTo(MusicController.class).list() ==> validator.onErrorUse(logic()).redirectTo(MusicController.class).list();
+validator.onErrorUsePageOf(MusicController.class).list() ==> validator.onErrorUse(page()).of(MusicController.class).list();
+validator.onErrorSendBadRequest() ==> validator.onErrorUse(status()).badRequest(errors);
+~~~
+
+Além disso, se o redirecionamento é para um método do mesmo controller, podemos usar:
+
+~~~
+#!java
+validator.onErrorForwardTo(this).list() ==> validator.onErrorUse(logic()).forwardTo(this.getClass()).list();
+validator.onErrorRedirectTo(this).list() ==> validator.onErrorUse(logic()).redirectTo(this.getClass()).list();
+validator.onErrorUsePageOf(this).list() ==> validator.onErrorUse(page()).of(this.getClass()).list();
+~~~
+
+##Mostrando os erros de validação no JSP
+
+Quando existem erros de validação, o VRaptor coloca um atributo na requisição chamado `errors` contendo a lista de erros. Essa lista é representada por items chave-valor, onde temos:
+
+- <code>category</code>: representa o caminho do atributo que originou o erro, cujo valor é uma convenção para `objeto.atributo`
+- <code>message</code>: representa a mensagem padrão da API do Bean Validation, normalmente um sufixo como: "deve estar no futuro", "não pode ser nulo", etc.
+
+E na view você pode imprimir:
+
+~~~
+#!xml
+<c:forEach var="error" items="${errors}">
+	${error.category} - ${error.message}<br />
+</c:forEach>
+~~~
+
+Você também pode buscar por um erro somente de uma determinada categoria, que é muito útil para quando você quer exibir os erros de validação ao lado de cada campo.
+
+~~~
+#!xml
+<input type="text" name="cliente.nome" />
+
+<span class="error">${errors.from('cliente.nome')}</span> 
+// retorna: 'não pode ser nulo, não pode ser menor que 50'
+
+<span class="error">${errors.from('cliente.nome').join(' - ')}</span> 
+// retorna: 'não pode ser nulo - não pode ser menor que 50'
+~~~
+
+﻿##Customizando as Mensagens
+
+Se você preferir é possível customizar as mensagens do Bean Validation. Para isso, basta adicionar o arquivo <code>ValidationMessages.properties</code> no seu classpath. Se você usa Maven o local é <code>/src/main/resources</code>.
+
+Considerando o exemplo anterior, o arquivo poderia ter a seguinte estrutura para customizar as mensagens padrões:
+
+~~~
+#!properties
+cliente.nome.vazio = O nome do cliente não pode ser vazio
+cliente.nome.tamanho = O nome do cliente deve possuir entre {min} e {max} caracteres
+cliente.nascimento.data = A data de nascimento ${validatedValue} informada deve ser no passado
+~~~
+
+E a classe teria que ser alterada para incluir essas chaves
+
+~~~
+#!java
+public class Cliente {
+	@NotNull(message="{cliente.nome.vazio}") // o valor entre {} indica que a mensagem vem do ResourceBundle
+	@Size(min=10, max=50, message="{cliente.nome.tamanho}")
+	private String nome;
+
+	@Past(message="{cliente.nascimento.data}")
+	private Date nascimento;
+}
+~~~
+
+Veja que foi adicionado parâmetros afim de deixar nossas mensagens mais dinâmicas e reaproveitáveis. As possibilidades atualmente são:
+
+* os valores dos atributos da restrição mapeados com os nomes de atributo. Ex. <code>{min}</code> e <code>{max}</code> no caso de <code>@Size</code>
+* o atual valor a ser validado sob o nome de <code>${validatedValue}</code>
+* uso de if-else curto, como por exemplo: <code>${value > 1 ? 's' : ''}</code>
+* um bean mapeado com o nome de <code>formatter</code> expondo método var-arg <code>format(String format, Object... args)</code> o qual se comporta como <code>java.util.Formatter.format(String format, Object... args)</code>. Ex.: <code>${formatter.format('%1$.2f', validatedValue)}</code>
+
+
+## Validação usando o Validator
+
+Caso você não queira usar o Bean Validation, você pode usar os métodos de validação do próprio <code>Validator</code> do VRaptor. O método mais simples é o <code>add</code>:
+
+~~~
+#!java
+if (cliente.getNome() == null) {
+  //mensagem simples
+  validator.add(new SimpleMessage("nome", "O nome deve ser preenchido"));
+
+  //mensagem internacionalizada
+  validator.add(new I18nMessage("nome", "nome.deve.ser.preenchido"));
+}
+~~~
+
+Podemos também usar os métodos <code>addIf</code> que adiciona a mensagem se a condição for verdadeira e o <code>ensure</code> que adiciona se a condição for falsa:
+
+~~~
+#!java
+validator.addIf(cliente.getNome() == null, new SimpleMessage("nome", "O nome deve ser preenchido"));
+
+validator.ensure(cliente.getNome() != null, new SimpleMessage("nome", "O nome deve ser preenchido"));
+~~~
+

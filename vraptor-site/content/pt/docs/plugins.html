@@ -1,0 +1,250 @@
+---
+title: Plugins
+---
+
+# Plugins do VRaptor
+
+Plugins são complementos ao VRaptor. Eles são úteis para situações como acessar um banco de dados usando JPA ou Hibernate, enviar emails, segurança etc.
+
+##VRaptor JPA
+
+O plugin VRaptor JPA cuida da criação e injeção de depedência da `EntityManager` e `EntityManagerFactory`. Além disso, o plugin aplica o padrão
+Open EntityManager In View, isto é, ele abre uma transação com o banco de dados no ínicio da requisição e executa o commit da transação no fim da requisição.
+
+Para usá-lo basta você copiar o jar para a sua aplicação, ou declarar o plugin como dependência do Maven conforme o trecho abaixo.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-jpa<artifactId>
+	<version>4.0.0.Final</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+É importante que a `persistence unit` chame-se `default`, e que o `persistence.xml` esteja no diretório `src/main/resources/META-INF/`.
+
+O plugin não possui nenhum provider. Com isso é necessário que você declare algum provider, como por exemplo, o Hibernate.
+
+~~~
+#!xml
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-entitymanager</artifactId>
+	<version>4.3.0.Final</version> <!-- Ou outra versão compatível com JPA 2.1 -->
+</dependency>
+~~~
+
+Ou se você prefere usar o Eclipselink:
+
+~~~
+#!xml
+<dependency>
+	<groupId>org.eclipse.persistence</groupId>
+	<artifactId>org.eclipse.persistence.jpa</artifactId>
+	<version>2.5.1</version>
+</dependency>
+~~~
+
+[Plugin no Gihub](https://github.com/caelum/vraptor-jpa).
+
+
+##VRaptor Hibernate
+
+Se você usa o Hibernate 4, você pode usar o plugin vraptor-hibernate. Semelhante ao plugin VRaptor JPA, este plugin cuida da
+criação e injetação de dependência da `Session` e `SessionFactory` do Hibernate. Além de aplicar o padrão Open Session In View.
+
+Você pode adicioná-lo em seu projeto Maven conforme o trecho abaixo, ou copiar manualmente o jar para seu projeto.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-hibernate</artifactId>
+	<version>4.0.0.Final</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](https://github.com/caelum/vraptor-hibernate).
+
+
+##Simple mail
+
+Permite envio de e-mails.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-simplemail</artifactId>
+	<version>4.0.0-RC2</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](https://github.com/caelum/vraptor-simplemail).
+
+
+##VRaptor Shiro
+
+O VRaptor Apache Shiro Plugin provê suporte a autenticação, autorização, criptografia e gerenciamento de sessão, via Apache Shiro, que é um framework leve, porém, poderoso, sendo ideal tanto para pequenos projetos como para projetos corporativos.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-shiro</artifactId>
+	<version>4.0.0-RC2</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](https://github.com/dipold/vraptor-shiro).
+
+
+## Joda-time
+
+Joda-time é uma API para facilitar o trabalho de dados temporais em Java. Para usar o joda-time basta acionar o plugin `vraptor-jodatime`. Adicionando o plugin, os converters são registrados automaticamente.
+
+~~~
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-jodatime</artifactId>
+	<version>4.0.0.Final</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~
+
+[Plugin no Gihub](https://github.com/caelum/vraptor-time-converters).
+
+
+## Nova API de datas do Java
+
+Se você utiliza Java 8, você pode tirar proveito da nova API de datas do pacote `java.time`. Basta incluir o plugin `vraptor-javatime`. Adicionando o plugin, os converters são registrados automaticamente.
+
+~~~
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-javatime</artifactId>
+	<version>4.0.0.Final</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~
+
+[Plugin no Gihub](https://github.com/caelum/vraptor-time-converters).
+
+
+##VRaptor Error-Control
+
+Controle dos erros de sua aplicação em tempo real com o envio de e-mail.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-error-control</artifactId>
+	<version>4.0.0.Final</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](https://github.com/caelum/vraptor-error-control).
+
+
+##VRaptor Brutauth
+
+Forma fácil de verificar as permissões de acesso das ações de seu controller.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-brutauth</artifactId>
+	<version>4.0.0.Final</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](https://github.com/leonardowolter/vraptor-brutauth).
+
+
+##VRaptor QuartzJob
+
+Agendamento de tarefas com Quartz.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-quartzjob</artifactId>
+	<version>4.0.0.Final</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](http://github.com/caelum/vraptor-quartzjob).
+
+
+##VRaptor Freemarker
+
+Renderiza templates do Freemarker.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-freemarker</artifactId>
+	<version>4.0.0-RC2</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](http://github.com/caelum/vraptor-freemarker).
+
+
+##VRaptor Dash
+
+Dashboard com varias ferramentas para seus projetos VRaptor.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-dash</artifactId>
+	<version>4.0.0-RC2</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](http://github.com/caelum/vraptor-dash).
+
+
+##VRaptor Authz
+
+Alternativa para controle de acesso (autorização) de seus métodos do controller.
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-authz</artifactId>
+	<version>4.0.0-RC2</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](https://github.com/Turini/vraptor-authz).
+
+
+
+##VRaptor I18n
+
+Soluções de i18n na view
+
+~~~ 
+#!xml
+<dependency>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-i18n</artifactId>
+	<version>4.0.0-Final</version> <!-- ou a última versão disponível -->
+</dependency>
+~~~ 
+
+[Plugin no Gihub](https://github.com/caelum/vraptor-i18n).
+
+
+##VRaptor contrib
+
+Você pode encontrar alguns plugins feitos por usuários do VRaptor no [vraptor-contrib](https://github.com/caelum/vraptor-contrib).
