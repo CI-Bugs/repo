@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="pt">
+  <%= render 'head' %>
+  <body>
+    <%= render 'header' %>
+    <nav class="main-nav">
+      <ul>
+        <li>
+            <a href="/pt/cookbook/aceitando-urls-com-ou-sem-barra-no-final">
+              Aceitando URLs com ou sem barra no final
+            </a>
+        </li>
+        <li>
+            <a href="/pt/cookbook/colocando-objetos-na-sessao">
+              Colocando objetos na sessão
+            </a>
+        </li>
+      </ul>
+    </nav>
+    <main>
+      <%= yield %>
+    </main>
+  </body>
+</html>

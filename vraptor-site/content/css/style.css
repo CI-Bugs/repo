@@ -1,0 +1,160 @@
+body {
+  color: #333333;
+  font: 13px Helvetica, arial, freesans, clean, sans-serif;
+  background: #fff;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin-top:15px;
+  margin-bottom:15px;
+  line-height:1.1;
+}
+
+h2 {
+  font-size:21px;
+}
+
+html {
+  font-family:sans-serif;
+  -ms-text-size-adjust:100%;
+  -webkit-text-size-adjust:100%;
+}
+
+tt,code,pre {
+  font-family:Consolas, "Liberation Mono", Courier, monospace;
+  font-size:12px;
+}
+
+a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+::selection {
+  text-shadow: none;
+  background: rgba(65,131,196,0.4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: font: 13px Helvetica, arial, freesans, clean, sans-serif;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+main {
+  float: left;
+  max-width: 700px;
+  width: 100%;
+}
+
+main h1 {
+  font-size: 40px;
+  font-weight: normal;
+  line-height: 40px;
+  letter-spacing: -1px;
+}
+
+main p {
+  margin: 20px 0;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+main ul, main ol {
+  margin: 20px;
+}
+
+main li {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+main ul li {
+  list-style-type: square;
+}
+
+.main-nav {
+  float: left;
+  width: 20%;
+  margin-right: 5%;
+  min-width: 300px;
+}
+
+.main-nav h2 {
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #AAAAAA;
+  letter-spacing: 1px;
+  line-height: 20px;
+}
+
+.main-nav ul {
+  list-style-type: none;
+  margin: 20px 0;
+}
+
+.main-nav li {
+  font-size: 14px;
+  line-height: 40px;
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
+
+pre {
+  background-color: #f8f8f8;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 1px 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.main-nav ul li:hover,
+.main-nav ul li:focus,
+.main-nav ul li a:hover,
+.main-nav ul li a:focus {
+  border-color: #eeeeee #eeeeee #dddddd;
+  background-color: #eeeeee;
+  text-decoration: none;
+}
+
+.main-nav ul li a {
+  border: 1px solid #ddd;
+  border-bottom: 0;
+  line-height: 40px;
+  width: 100%;
+  display: inline-block;
+}
+
+.main-nav ul li:last-child a {
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  display: inline-block;
+  vertical-align: middle;
+  border-right: 2px solid #EAEAEA;
+}
+
+.logo-link {
+  display: inline-block;
+  padding: 0px 28px 5px;
+}
+
+.sublogo-message {
+  font-size: 4em;
+  margin-left: 20px;
+  color: #AAAAAA;
+  vertical-align: middle;
+}
+
+span#language {
+  float: right;
+  margin-right: 20px;
+}

@@ -1,0 +1,70 @@
+#!/usr/bin/env ruby
+
+def define_layout(archive, layout)
+  compile archive do
+    unless item.binary?
+      filter :erb
+      layout layout
+    end
+  end
+end
+
+def stylized(*archive, layout)
+  archive.each do |a|
+    compile a do
+      if layout
+        filter :kramdown
+        filter :colorize_syntax, :default_colorizer => :pygmentsrb
+        layout layout
+        filter :relativize_paths, :type => :html
+        filter :relativize_paths, :type => :css
+      end
+    end
+  end
+end
+
+compile '/css/*' do
+    filter :rainpress
+end
+
+stylized '/img/*', '/css/*', false
+
+stylized '/pt/docs/*', '/pt/documentacao'
+
+stylized '/pt/cookbook/*', '/pt/cookbook'
+
+stylized '/en/docs/*', '/en/documentation'
+
+stylized '/en/cookbook/*', '/en/cookbook'
+
+stylized '/en/*', '/en/default'
+
+stylized '/*', '/pt/default'
+
+define_layout '/pt/docs/*', '/pt/documentacao'
+
+define_layout '/pt/cookbook/*', '/pt/cookbook'
+
+define_layout '/en/docs/*', '/en/documentation'
+
+define_layout '/en/cookbook/*', '/en/cookbook'
+
+define_layout '/en/*', '/en/default'
+
+define_layout '/*', '/pt/default'
+
+route 'css/*' do
+    item.identifier.chop + '.' + item[:extension]
+end
+
+route '*' do
+  if item.binary?
+    # Write item with identifier /foo/ to /foo.ext
+    item.identifier.chop + '.' + item[:extension]
+  else
+    # Write item with identifier /foo/ to /foo/index.html
+    item.identifier + 'index.html'
+  end
+end
+
+layout '*', :erb
