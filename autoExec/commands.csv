@@ -1,0 +1,2 @@
+Branch,Buggy Commit,Fixed Commit,Failing Test Cases,"Maven Java Compiler (pom.xml)",srcjavafolder,srctestfolder,binjavafolder,bintestfolder
+Bug11,639e3a8605b02d5c4e25541004021e56af093850,3f94f538f2a98241a662ed07c48ecd2b9baef983,com.tagtraum.perf.gcviewer.view.model.TestRecentGCResourcesModel,,/src/main/java/,/src/test/java/,/target/classes,/target/test-classes
