@@ -15,7 +15,10 @@ CiBugsRepo = 'https://github.com/CI-Bugs/repo.git'
 fCommands = open('commands.csv', 'r') 
 bugCommands = fCommands.readlines()   
 
-f = open(r'ProjectResults.txt', 'w+')
+f = open(r'execLogs.txt', 'w+')
+
+cmd = 'mkdir logs '        
+subprocess.run(cmd, shell=True, cwd = rootDir)   
 
 #Download Astor Repository
 cmd = 'git clone ' + astorRepo        
@@ -23,9 +26,6 @@ subprocess.run(cmd, shell=True, cwd = rootDir)
 
 #root dir is astor now
 rootDir = rootDir+'/astor'
-
-cmd = 'mkdir logs '        
-subprocess.run(cmd, shell=True, cwd = rootDir)   
 
 #Astor Compile
 cmd = 'mvn install -DskipTests=true'        
@@ -58,7 +58,10 @@ f.write("repo : " + CiBugsRepo + "\n")
 f.flush()
 for bugCommand in bugCommands[1:]:
 
-    bugCommand = bugCommand.split(",")    
+    bugCommand = bugCommand.split(",")  
+
+    if(len(bugCommand) != 9):
+        continue
 
     bugId = bugCommand[0]
     buggyCommit = bugCommand[1]
@@ -72,45 +75,64 @@ for bugCommand in bugCommands[1:]:
     cmd = 'cp -r repo_bkup repo'
     subprocess.run(cmd, shell=True, cwd = rootDir)          
 
-    cmd = 'git checkout ' + bugId        
+    cmd = 'git checkout ' + bugId     
+    f.write("repo : " + cmd + "\n")      
+    f.flush()     
     subprocess.run(cmd, shell=True, cwd = repoDir)     
 
     cmd = 'git fetch origin ' + buggyCommit
+    f.write("repo : " + cmd + "\n")      
+    f.flush()         
     subprocess.run(cmd, shell=True, cwd = repoDir)   
 
     cmd = 'git reset --hard ' + buggyCommit
+    f.write("repo : " + cmd + "\n")    
+    f.flush()           
     subprocess.run(cmd, shell=True, cwd = repoDir)          
 
     cmd = 'git rev-parse --verify HEAD'
+    f.write("repo : " + cmd + "\n")    
+    f.flush()           
     subprocess.run(cmd, shell=True, cwd = repoDir)         
 
-    cmd = 'mvn compile > ../logs/' + bugId + "_compile.txt"
+    cmd = 'mvn compile > ../../logs/' + bugId + "_compile.txt"
+    f.write("repo : " + cmd + "\n")           
     subprocess.run(cmd, shell=True, cwd = repoDir)    
 
-    cmd = 'mvn test > ../logs/' + bugId + "_test.txt"
+    cmd = 'mvn test > ../../logs/' + bugId + "_test.txt"
+    f.write("repo : " + cmd + "\n")  
+    f.flush()             
     subprocess.run(cmd, shell=True, cwd = repoDir)        
 
     cmd  = 'mvn dependency:build-classpath -B | egrep -v "(^\[INFO\]|^\[WARNING\])"'
     dependencies = str(subprocess.Popen(cmd, shell=True, cwd = repoDir, stdout=subprocess.PIPE ).communicate()[0], 'utf-8')  
     dependencies = dependencies.strip("\n")
-    cmd = 'java -cp astor.jar fr.inria.main.evolution.AstorMain -flthreshold 0.5 -maxtime 60 -stopfirst false -scope package ' 
+    cmd = 'java -cp astor.jar fr.inria.main.evolution.AstorMain -flthreshold 0.5 -maxtime 5 -stopfirst false -scope package ' 
 
-    cmd = cmd + " -location " + rootDir + "/repo "
-    cmd = cmd + " -mode jkali "   
+    cmd = cmd + " -location " + rootDir + "/repo " 
     cmd = cmd + " -failing " + failingCases.strip("\n")
     cmd = cmd + " -dependencies " +  dependencies.strip("\n")
     cmd = cmd + " -srcjavafolder " + srcjavafolder.strip("\n")
     cmd = cmd + " -srctestfolder " + srctestfolder.strip("\n")    
     cmd = cmd + " -binjavafolder " + binjavafolder.strip("\n")       
-    cmd = cmd + " -bintestfolder " + bintestfolder.strip("\n")   
+    cmd = cmd + " -bintestfolder " + bintestfolder.strip("\n")
 
-    cmd = cmd + ' > logs/' + bugId + "_jKali.txt"
-    subprocess.run(cmd, shell=True, cwd = rootDir)   
+    tools = ['jkali', 'jgenprog', 'cardumen']
+    for tool in tools :   
+        execCmd = cmd + " -mode "  + tool + ' > ../logs/' + bugId + "_" + tool+'.txt'
+        f.write("repo : " + execCmd + "\n")           
+        f.flush()        
+        subprocess.run(execCmd, shell=True, cwd = rootDir)   
 
     cmd = 'rm -rf repo'
     subprocess.run(cmd, shell=True, cwd = rootDir)                       
-                            
+    f.write("repo : " + execCmd + "\n")      
+    f.flush()                       
 f.close()
+
+#Create backup for CI Bugs Repository
+cmd = 'mv repo_bkup repo'
+subprocess.run(cmd, shell=True, cwd = rootDir)
   
 
 
